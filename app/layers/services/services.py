@@ -16,8 +16,14 @@ def getAllImages():
     json_collection = transport.getAllImages()
     imagenes = []
     
-    for imagen in json_collection:
+    for object in json_collection:
         imagenes.append(translator.fromRequestIntoCard(object))
+        
+        if len(card=translator.fromRequestIntoCard(object))== 0:
+            print("No existen nombres alternativos")
+        else:
+            
+
     
     return imagenes        
 
