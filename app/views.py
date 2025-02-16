@@ -21,7 +21,7 @@ def search(request):
 
     # si el usuario ingresó algo en el buscador, se deben filtrar las imágenes por dicho ingreso.
     if (name != ''):
-        images = []
+        images = services.filterByCharacter(name)
         favourite_list = []
 
         return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
@@ -33,7 +33,7 @@ def filter_by_house(request):
     house = request.POST.get('house', '')
 
     if house != '':
-        images = [] # debe traer un listado filtrado de imágenes, según la casa.
+        images = services.filterByHouse(house) # debe traer un listado filtrado de imágenes, según la casa.
         favourite_list = []
 
         return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
