@@ -4,25 +4,59 @@
 
     <div class="d-flex justify-content-center" style="margin-bottom: 1%">
         <!-- Buscador del sitio -->
-        <form class="d-flex" action="{% url 'buscar' %}" method="POST">
+        <form class="d-flex" action="{% url 'buscar' %}" method="POST" id="searchForm">
             {% csrf_token %}
             <input class="form-control me-2" type="search" name="query" placeholder="Ginny, Ron, Harry" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Buscar</button>
+            <button class="btn btn-outline-success" type="submit" id="searchButton">
+                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                Buscar
+            </button>
         </form>
+        <script>
+            document.getElementById("searchForm").addEventListener("submit", function(event) {
+                let btn = document.getElementById("searchButton");
+                let spinner = document.getElementById("spinner");
+    
+                // Deshabilita el botón y muestra el spinner
+                btn.disabled = true;
+                spinner.classList.remove("d-none");
+            });
+        </script>
     </div>
 
     <div class="d-flex gap-1 col-2 mx-auto mb-3">
         <form method="post" action="{% url 'filter_by_house' %}">
             {% csrf_token %}
             <input type="hidden" name="house" value="Gryffindor">
-            <button type="submit" class="btn btn-primary">SOLO Gryffindor</button>
+            <button type="submit" class="btn btn-primary" id="filterButton">
+                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                SOLO Gryffindor
+            </button>        
         </form>
-
-        <form method="post" action="{% url 'filter_by_house' %}">
+        <script>
+            document.getElementById("filterButton").addEventListener("click", function() {
+                let spinner = document.getElementById("spinner");
+                spinner.classList.remove("d-none"); // Muestra el spinner
+            });
+        </script>
+        <form method="post" action="{% url 'filter_by_house' %}" id="filterForm">
             {% csrf_token %}
             <input type="hidden" name="house" value="Slytherin">
-            <button type="submit" class="btn btn-danger">SOLO Slytherin</button>
+            <button type="submit" class="btn btn-danger" id="filterButton">
+                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                SOLO Slytherin
+            </button>
         </form>
+        <script>
+            document.getElementById("filterForm").addEventListener("submit", function() {
+                let btn = document.getElementById("filterButton");
+                let spinner = document.getElementById("spinner");
+        
+                // Deshabilita el botón y muestra el spinner
+                btn.disabled = true;
+                spinner.classList.remove("d-none");
+            });
+        </script>
     </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -32,11 +66,11 @@
         <div class="col">
             <!-- evaluar si la imagen pertenece a Gryffindor, Slytherin u otro -->
             {% if img.house == 'Gryffindor' %}
-            <div class="card border-success mb-3 ms-5" style="max-width: 540px;">
+            <div class="card border-success mb-3 ms-5 h-100" style="max-width: 540px;border-width: 2.5px;">
             {% elif img.house == 'Slytherin' %}
-            <div class="card border-danger mb-3 ms-5" style="max-width: 540px;">
+            <div class="card border-danger mb-3 ms-5 h-100" style="max-width: 540px;border-width: 2.5px;">
             {% elif img.house == 'Hufflepuff' or img.house == 'Ravenclaw' %}
-            <div class="card border-warning mb-3 ms-5" style="max-width: 540px;">
+            <div class="card border-warning mb-3 ms-5 h-100" style="max-width: 540px;border-width: 2.5px;">
             {% endif %}
                 <div class="row g-0">
                     <div class="col-md-4">
