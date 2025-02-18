@@ -43,15 +43,21 @@ def filter_by_house(request):
 # Estas funciones se usan cuando el usuario está logueado en la aplicación.
 @login_required
 def getAllFavouritesByUser(request):
-    pass
+    favourite_list = services.getAllFavourites(request)
+    return render(request, 'favourites.html', {'favourite_list': favourite_list})
+
 
 @login_required
 def saveFavourite(request):
-    pass
+    services.saveFavourite(request)
+    return redirect('favoritos')
+
 
 @login_required
 def deleteFavourite(request):
-    pass
+    services.deleteFavourite(request)
+    return redirect('favoritos')
+
 
 @login_required
 def exit(request):
